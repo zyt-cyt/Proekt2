@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: radial-gradient(circle at center, #ffffff 0%, #f9f9f9 50%, #f2f2f2 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    padding-top: 40px;
+    overflow: hidden;
+}
+
+.game-block {
+    width: 90%;
+    max-width: 500px;
+    background: #1e1e1e;
+    color: #fff;
+    border-radius: 24px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
+}
+
+.game-block:hover {
+    transform: translateY(-5px);
+}
+
+.game-block h1 {
+    font-size: clamp(1.5em, 5vw, 2.2em);
+    color: #ff6f61;
+    font-weight: 600;
+    letter-spacing: 1px;
+    animation: bounce 1s ease infinite alternate;
+    margin-bottom: 15px;
+}
+
+.game-block p {
+    font-size: clamp(1em, 2.5vw, 1.3em);
+    margin: 12px 0;
+}
+
+.game-block button {
+    font-size: clamp(1em, 2.5vw, 1.2em);
+    width: clamp(160px, 55%, 220px);
+    height: clamp(45px, 6vw, 55px);
+    margin-top: 20px;
+    background: #ff6f61;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.game-block button:hover {
+    transform: scale(1.05);
+    background-color: #ff4d3e;
+}
+
+#game-container {
+    position: relative;
+    width: 95vw;
+    max-width: 700px;
+    height: 55vh;
+    max-height: 500px;
+    min-height: 300px;
+    background: radial-gradient(circle at center, #ffffff 0%, #f5f9f9 50%, #f2f2f2 100%);
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+#target {
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    width: clamp(50px, 12%, 100px);
+    max-width: 100px;
+    min-width: 50px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 10%;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-12px); }
+}
+
+.alert-title {
+    font-weight: bold;
+    color: #333;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.alert-button {
+    background-color: #28a745 !important;
+    color: white !important;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 12px;
+    width: 90%;
+}
+
+@media (max-width: 480px) {
+    #game-container { height: 40vh; max-height: 250px; }
+    #target { width: clamp(40px, 18%, 60px); }
+    .game-block h1 { font-size: clamp(1.2em, 5vw, 1.6em); }
+    .game-block p { font-size: clamp(0.8em, 3vw, 1em); }
+    .game-block button { width: 70%; font-size: clamp(0.8em, 3vw, 1em); height: clamp(35px, 5vw, 40px); }
+}
+
+@media (min-width: 481px) and (max-width: 600px) {
+    #game-container { height: 45vh; max-height: 300px; }
+    #target { width: clamp(45px, 15%, 70px); }
+    .game-block h1 { font-size: clamp(1.3em, 4.5vw, 1.7em); }
+    .game-block p { font-size: clamp(0.85em, 3vw, 1.1em); }
+    .game-block button { width: 75%; font-size: clamp(0.9em, 2.8vw, 1.05em); height: clamp(37px, 5.5vw, 42px); }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    #game-container { height: 50vh; max-height: 400px; }
+    #target { width: clamp(50px, 12%, 90px); }
+    .game-block h1 { font-size: clamp(1.4em, 3.5vw, 2em); }
+    .game-block p { font-size: clamp(0.9em, 2.5vw, 1.2em); }
+    .game-block button { width: 80%; font-size: clamp(1em, 2.5vw, 1.2em); height: clamp(40px, 5vw, 50px); }
+}
+
+@media (min-width: 1200px) {
+    #game-container { height: 55vh; max-height: 500px; }
+    #target { width: clamp(70px, 10%, 100px); }
+    .game-block h1 { font-size: clamp(1.6em, 2.5vw, 2.2em); }
+    .game-block p { font-size: clamp(1em, 2vw, 1.3em); }
+    .game-block button { width: 220px; font-size: 1.2em; height: 55px; }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Попади м'ячем!</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+
+  <div class="game-block">
+    <h1>Попади м'ячем! ⚽</h1>
+    <p>Попадань: <span id="score">0</span></p>
+    <p>Час: <span id="timer">20</span> секунд</p>
+    <p>Рекорд: <span id="highscore">0</span></p>
+    <button id="start-button">Почати гру</button>
+  </div>
+
+  <div id="game-container">
+    <img id="target" src="img/Мяч1.png" alt="Мяч">
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="audio/8-bit-background-music-for-arcade-game-come-on-mario-164702.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    let score = 0;
+    let timer = 20;
+    let highscore = localStorage.getItem('highscore') || 0;
+    let gameInterval, moveTargetInterval;
+
+    const $target = $("#target");
+    const $timer = $("#timer");
+    const $score = $("#score");
+    const $highscore = $("#highscore");
+    const $container = $("#game-container");
+    const $startButton = $("#start-button");
+    const bgMusic = $("#bg-music")[0];
+
+    $highscore.text(highscore);
+
+    function startGame() {
+      score = 0;
+      timer = 20;
+      $score.text(score);
+      $timer.text(timer);
+
+      clearInterval(gameInterval);
+      clearInterval(moveTargetInterval);
+      gameInterval = setInterval(updateTimer, 1000);
+      moveTargetInterval = setInterval(moveTarget, 1200);
+
+      bgMusic.volume = 0.25;
+      bgMusic.play();
+
+      $target.off("click").on("click", () => {
+        score++;
+        $score.text(score);
+        $target.attr("src", "img/Мяч3.png");
+        setTimeout(() => $target.attr("src", "img/Мяч1.png"), 400);
+      });
+    }
+
+    function updateTimer() {
+      timer--;
+      $timer.text(timer);
+      if (timer <= 0) endGame();
+    }
+
+    function moveTarget() {
+      const x = Math.random() * ($container.width() - $target.width());
+      const y = Math.random() * ($container.height() - $target.height());
+      $target.css({ left: x + "px", top: y + "px" });
+    }
+
+    function endGame() {
+      clearInterval(gameInterval);
+      clearInterval(moveTargetInterval);
+      bgMusic.pause();
+
+      if (score > highscore) {
+        highscore = score;
+        localStorage.setItem('highscore', highscore);
+        $highscore.text(highscore);
+        Swal.fire({
+          title: 'Новий рекорд! 🎉',
+          text: `Ви набрали ${score} попадань!`,
+          icon: 'success',
+          confirmButtonText: 'Чудово!',
+          customClass: { title: 'alert-title', confirmButton: 'alert-button' }
+        });
+      } else {
+        Swal.fire({
+          title: 'Гра завершена!',
+          text: `Ви набрали ${score} попадань. Спробуй ще раз!`,
+          icon: 'info',
+          confirmButtonText: 'Зрозуміло!',
+          customClass: { title: 'alert-title', confirmButton: 'alert-button' }
+        });
+      }
+    }
+
+    $startButton.on("click", startGame);
+  </script>
+
+</body>
+</html>
